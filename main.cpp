@@ -61,9 +61,8 @@ int main() {
 
 		Shader shader((baseDir + "\\kernel.cu").c_str(), "kernel.cu", { baseDir }, options );
 
-		int val = 4;
 		shader.launch("kernelMain",
-			ShaderArgument().ptr(&buffer),
+			ShaderArgument().ptr(&buffer).value(4),
 			blocks, 1, 1, blockDim, 1, 1, stream);
 
 		oroStreamSynchronize(stream);

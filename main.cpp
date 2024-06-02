@@ -2,6 +2,7 @@
 #include <memory>
 #include <Orochi/Orochi.h>
 #include "shader.hpp"
+#include "typedbuffer.hpp"
 
 int main() {
 	if (oroInitialize((oroApi)(ORO_API_HIP | ORO_API_CUDA), 0))
@@ -31,8 +32,9 @@ int main() {
 
 	int blockDim = 32;
 	int blocks = 4;
-	void* inputs;
-	oroMalloc(&inputs, sizeof(int) * blockDim * blocks );
+
+	TypedBuffer<int> buffer(TYPED_BUFFER_DEVICE);
+	buffer.allocate(blockDim * blocks);
 
 	{
 		std::string baseDir = "../"; /* repository root */
@@ -47,7 +49,6 @@ int main() {
 		{
 			options.push_back(AMD_ARG_LINE_INFO);
 		}
-
 		// Debug
 		//if( isNvidia )
 		//{
@@ -62,21 +63,18 @@ int main() {
 
 		int val = 4;
 		shader.launch("kernelMain",
-			ShaderArgument().value(inputs),
+			ShaderArgument().ptr(&buffer),
 			blocks, 1, 1, blockDim, 1, 1, stream);
 
 		oroStreamSynchronize(stream);
 	}
 
-	std::vector<int> outputs(blockDim * blocks);
-	oroMemcpyDtoH(outputs.data(), inputs, sizeof(int) * blockDim * blocks);
+	TypedBuffer<int> outputs = buffer.toHost();
 
 	for (auto tid : outputs)
 	{
 		printf("%d\n", tid);
 	}
-
-	oroFree(inputs);
 
 	return 0;
 }

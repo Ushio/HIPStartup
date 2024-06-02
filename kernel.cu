@@ -1,6 +1,13 @@
+#include "typedbuffer.hpp"
 
-extern "C" __global__ void kernelMain( int* xs )
+__device__
+int sqr(int x)
+{
+	return x * x;
+}
+
+extern "C" __global__ void kernelMain( TypedBuffer<int> xs )
 {
 	int tid = threadIdx.x + blockDim.x * blockIdx.x;
-	xs[tid] = tid;
+	xs[tid] = sqr(tid);
 }

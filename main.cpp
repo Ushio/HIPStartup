@@ -49,14 +49,14 @@ int main() {
 		}
 
 		// Debug
-		if( isNvidia )
-		{
-			options.push_back("-G");
-		}
-		else
-		{
-			options.push_back("-O0");
-		}
+		//if( isNvidia )
+		//{
+		//	options.push_back("-G");
+		//}
+		//else
+		//{
+		//	options.push_back("-O0");
+		//}
 
 		Shader shader((baseDir + "\\kernel.cu").c_str(), "kernel.cu", { baseDir }, options );
 

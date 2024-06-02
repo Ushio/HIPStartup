@@ -3,34 +3,6 @@
 #include <Orochi/Orochi.h>
 #include "shader.hpp"
 
-class Buffer
-{
-public:
-	Buffer(const Buffer&) = delete;
-	void operator=(const Buffer&) = delete;
-
-	Buffer(int64_t bytes)
-		: m_bytes(std::max(bytes, 1LL))
-	{
-		oroMalloc(&m_ptr, m_bytes);
-	}
-	~Buffer()
-	{
-		oroFree(m_ptr);
-	}
-	int64_t bytes() const
-	{
-		return m_bytes;
-	}
-	char* data()
-	{
-		return (char*)m_ptr;
-	}
-private:
-	int64_t m_bytes;
-	oroDeviceptr m_ptr;
-};
-
 int main() {
 	if (oroInitialize((oroApi)(ORO_API_HIP | ORO_API_CUDA), 0))
 	{

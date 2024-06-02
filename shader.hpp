@@ -85,7 +85,7 @@ private:
 class Shader
 {
 public:
-	Shader( const char* filename, const char* kernelLabel, const std::vector<std::string>& includeDirs, const std::vector<std::string>& extraArgs )
+	Shader( const char* filename, const char* kernelLabel, const std::vector<std::string>& options )
 	{
 		std::vector<char> src;
 		loadAsVector( &src, filename );
@@ -94,19 +94,6 @@ public:
 
 		orortcProgram program = 0;
 		orortcCreateProgram( &program, src.data(), kernelLabel, 0, 0, 0 );
-		std::vector<std::string> options;
-
-		for( int i = 0; i < includeDirs.size(); ++i )
-		{
-			// A space between -I and path should not exist. 
-			// This is a workaround for AMD rtc API on hiprtc0503.dll
-			options.push_back( "-I" + includeDirs[i] );
-		}
-
-		for( int i = 0; i < extraArgs.size(); ++i )
-		{
-			options.push_back( extraArgs[i] );
-		}
 
 		std::vector<const char*> optionChars;
 		for( int i = 0; i < options.size(); ++i )

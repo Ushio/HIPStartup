@@ -40,6 +40,8 @@ int main() {
 		std::string baseDir = "../"; /* repository root */
 
 		std::vector<std::string> options;
+		options.push_back("-I" + baseDir);
+
 		if (isNvidia)
 		{
 			options.push_back("--gpu-architecture=compute_70");
@@ -59,7 +61,7 @@ int main() {
 		//	options.push_back("-O0");
 		//}
 
-		Shader shader((baseDir + "\\kernel.cu").c_str(), "kernel.cu", { baseDir }, options );
+		Shader shader((baseDir + "\\kernel.cu").c_str(), "kernel.cu", options );
 
 		shader.launch("kernelMain",
 			ShaderArgument().ptr(&buffer).value(4),

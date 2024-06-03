@@ -13,7 +13,7 @@ project "main"
     flags { "MultiProcessorCompile", "NoPCH" }
 
     -- Src
-    files { "main.cpp", "shader.hpp", "kernel.cu" }
+    files { "main.cpp", "shader.hpp", "kernel.cu",  "typedbuffer.hpp", "typedbuffer.natvis",  }
 
     -- Orochi
     defines {"OROCHI_ENABLE_CUEW"}

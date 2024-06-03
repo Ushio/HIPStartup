@@ -101,6 +101,9 @@ struct TypedBuffer
 	size_t size() const { return m_size; }
 
 	TYPED_BUFFER_DEVICE_FUNC
+	size_t bytes() const { return m_size * sizeof(T); }
+
+	TYPED_BUFFER_DEVICE_FUNC
 	const T* data() const { return m_data; }
 
 	TYPED_BUFFER_DEVICE_FUNC

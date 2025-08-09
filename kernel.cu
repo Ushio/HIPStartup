@@ -1,4 +1,5 @@
 #include "typedbuffer.hpp"
+#include "helper_math.h"
 
 __device__
 int sqr(int x)

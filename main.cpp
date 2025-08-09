@@ -3,6 +3,7 @@
 #include <Orochi/Orochi.h>
 #include "shader.hpp"
 #include "typedbuffer.hpp"
+#include "helper_math.h"
 
 int main() {
 	if (oroInitialize((oroApi)(ORO_API_HIP | ORO_API_CUDA), 0))
